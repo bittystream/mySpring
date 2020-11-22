@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean name="student" class="cn.edu.cqu.ioc.entity.Student">
+		<property name="id" value="20184480"></property>
+		<property name="name" value="lyz"></property>
+	</bean>
+</beans>
