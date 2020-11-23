@@ -8,7 +8,7 @@
   	<servlet-name>MyDispatchServlet</servlet-name>
   	<display-name>MyDispatchServlet</display-name>
   	<description></description>
-  	<servlet-class>cn.edu.cqu.annotation.MyDispatchServlet</servlet-class>
+  	<servlet-class>cn.edu.cqu.myspring.servlet.MyDispatchServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>MyDispatchServlet</servlet-name>

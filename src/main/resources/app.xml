@@ -4,4 +4,9 @@
 		<property name="id" value="20184480"></property>
 		<property name="name" value="lyz"></property>
 	</bean>
+	
+	<bean name="student000" class="cn.edu.cqu.ioc.entity.Student">
+		<property name="id" value="20181814"></property>
+		<property name="name" value="gg"></property>
+	</bean>
 </beans>

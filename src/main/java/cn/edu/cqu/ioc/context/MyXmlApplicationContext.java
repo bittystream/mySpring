@@ -8,6 +8,10 @@ import cn.edu.cqu.ioc.bean.factory.MyBeanFactory;
 import cn.edu.cqu.ioc.bean.io.ResourceLoader;
 import cn.edu.cqu.ioc.bean.xml.MyXmlBeanDefinitionReader;
 
+
+
+// Description: 通过读取xml获取bean 放入ioc容器中
+
 public class MyXmlApplicationContext implements MyApplicationContext{
 
 	private String location;

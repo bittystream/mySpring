@@ -4,7 +4,6 @@ public class MyBeanDefinition {
 
 	private Class<?> beanClass; 	//那个类
 	private Object bean;		//那个类实例化对象，只放一份在ioC容器中
-	@SuppressWarnings("unused")
 	private String className;
 	private MyProperties properties = new MyProperties();
 

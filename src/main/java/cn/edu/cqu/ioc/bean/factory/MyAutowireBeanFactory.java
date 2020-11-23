@@ -21,11 +21,11 @@ public class MyAutowireBeanFactory extends MyAbstractBeanFactory{
 	private void addProperty(Object bean, MyBeanDefinition definition) throws Exception {
 		for (MyProperty property : definition.getProperties().getProperties()) {
 			// 根据给定属性名称获取给定bean中的属性对象
-			Field declaredField = bean.getClass().getDeclaredField(property.getname());
+			Field declaredField = bean.getClass().getDeclaredField(property.getName());
 			// 设置属性访问的权限
 			declaredField.setAccessible(true);
 			// 获取定义的属性中的对象
-			Object value = property.getvalue();
+			Object value = property.getValue();
 			// 判断这个对象是否是MyBeanReference
 			if (value instanceof MyBeanReference) {
 				MyBeanReference beanReference = (MyBeanReference) value;

@@ -10,11 +10,11 @@ public class MyProperty {
 		this.value = value;
 	}
 	
-	public String getname() {
+	public String getName() {
 		return this.name;
 	}
 
-	public Object getvalue() {
+	public Object getValue() {
 		return this.value;
 	}
 
