@@ -14,8 +14,8 @@ public class BeanTest {
 		
 		// ×¢½â×¢Èë
 		MyAnnotationApplicationContext ac = new MyAnnotationApplicationContext("cn.edu.cqu");
-		Student student = (Student)ac.getBean("student101");
-		student.sayHi();
+		Computer c = (Computer)ac.getBean("computer");
+		c.sayHiForOwner();
 	
 	}
 

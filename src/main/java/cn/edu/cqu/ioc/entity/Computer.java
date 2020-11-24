@@ -4,12 +4,15 @@ import cn.edu.cqu.ioc.annotation.*;
 
 public class Computer {
 	private String name;
-	@MyAutoWired
+	@MyAutoWired("student101")
 	public Student owner;
 
 	public Computer(String name, Student owner) {
 		this.name = name;
 		this.owner = owner;
+	}
+	public Computer(String name) {
+		this.name = name;
 	}
 	
 	public void setName(String name) {

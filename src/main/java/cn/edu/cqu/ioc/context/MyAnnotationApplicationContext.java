@@ -21,10 +21,7 @@ public class MyAnnotationApplicationContext implements MyApplicationContext {
 	
 	private void doContext() {
 		List<Class<?>> clsList = MyClassUtil.getAllClassByPackageName(packageName);
-		MyAnnotationUtil.doBeanScanner(clsList);
-		MyAnnotationUtil.doReqMapScanner(clsList);
-		MyAnnotationUtil.doAutoWireScanner();
-		iocMap = MyAnnotationUtil.iocMap;
+		iocMap = MyAnnotationUtil.doAutoWireScanner(MyAnnotationUtil.doBeanScanner(clsList));
 	}
 	
 

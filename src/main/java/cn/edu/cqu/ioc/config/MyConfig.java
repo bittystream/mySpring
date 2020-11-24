@@ -13,7 +13,7 @@ public class MyConfig {
 	
 	@MyBean
 	public Computer computer() {
-		return new Computer("ok", new Student("20200000","omg"));
+		return new Computer("ok");
 	}
 	
 }

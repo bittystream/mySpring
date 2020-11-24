@@ -9,6 +9,10 @@
   	<display-name>MyDispatchServlet</display-name>
   	<description></description>
   	<servlet-class>cn.edu.cqu.myspring.servlet.MyDispatchServlet</servlet-class>
+  	<init-param>
+  	  <param-name>contextConfigLocation</param-name>
+  	  <param-value>application.properties</param-value>
+  	</init-param>
   </servlet>
   <servlet-mapping>
   	<servlet-name>MyDispatchServlet</servlet-name>

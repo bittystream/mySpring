@@ -14,47 +14,54 @@ import cn.edu.cqu.ioc.util.*;
 import cn.edu.cqu.ioc.annotation.*;
  
 public class MyAnnotationUtil {
-	public static Map<String,Method> reqMap = new HashMap<String,Method>();
-	public static Map<String,Object> iocMap = new HashMap<String,Object>();
-	
-	public static void doReqMapScanner(List<Class<?>> clsList) {
+	public static Map<String,Method> doReqMapScanner(List<Class<?>> clsList) {
+		Map<String,Method> reqMap = new HashMap<String, Method>();
 		if (clsList != null && clsList.size() > 0) {
 			for (Class<?> cls : clsList) {
+				String baseUrl = "";
 				// 获得@MyRequestMapping标记的类
-				if (cls.isAnnotationPresent(MyController.class)) {
-					Method [] methods = cls.getDeclaredMethods();
-					for (Method method : methods) {
-						MyRequestMapping myRequestMapping = method.getAnnotation(MyRequestMapping.class);
-						if (myRequestMapping != null) {
-							// TODO: 获取映射关系，加入reqMap
-						}
+				if (cls.isAnnotationPresent(MyRequestMapping.class)) {
+					MyRequestMapping mrp = cls.getAnnotation(MyRequestMapping.class);
+					baseUrl = mrp.value();
+				}
+				for (Method method: cls.getMethods()) {
+					if (method.isAnnotationPresent(MyRequestMapping.class)) {
+						MyRequestMapping mrp = method.getAnnotation(MyRequestMapping.class);
+						String url = baseUrl + mrp.value();
+						System.out.println(url+" method="+method.getName());
+						reqMap.put(url, method);
 					}
 				}
 			}
 		}
+		return reqMap;
 	}
 	
-	
-	public static void doAutoWireScanner(){
-		if (iocMap == null) return;
+	// 处理@MyAutoWired
+	public static Map<String,Object> doAutoWireScanner(Map<String,Object> iocMap){
+		if (iocMap == null) return null;
 		for (Map.Entry<String,Object> entry : iocMap.entrySet()) {
 			Field [] fields = entry.getValue().getClass().getDeclaredFields();
 			for (Field field : fields) {
 				if (field.isAnnotationPresent(MyAutoWired.class)) {
+					MyAutoWired myAutoWired = field.getAnnotation(MyAutoWired.class);
 					String beanName = field.getType().getName();
+					if (!myAutoWired.value().equals("")) beanName = myAutoWired.value();
 					field.setAccessible(true);
 					try {
 						field.set(entry.getValue(),iocMap.get(beanName));
 					} catch (Exception e) {
 						e.printStackTrace();
-					} 
+					}
 				}
 			}
 		}
+		return iocMap;
 	}
 	
 	
-	public static void doBeanScanner(List<Class<?>> clsList){
+	public static Map<String,Object> doBeanScanner(List<Class<?>> clsList){
+		Map<String,Object> iocMap = new HashMap<String,Object>();
 		if (clsList != null && clsList.size() > 0) {
 			for (Class<?> cls : clsList) {
 				// 获得@MyConfiguration标记的类
@@ -108,6 +115,7 @@ public class MyAnnotationUtil {
 				
 			}
 		}
+		return iocMap;
 	}
 	
 	static String firstLetter2LowerCase(String name) {
@@ -119,11 +127,7 @@ public class MyAnnotationUtil {
 	
 	public static void main(String [] args) {
 		List<Class<?>> clsList = MyClassUtil.getAllClassByPackageName("cn.edu.cqu");
-		MyAnnotationUtil.doBeanScanner(clsList);
-		Student student101 = (Student) MyAnnotationUtil.iocMap.get("student101");
-		student101.sayHi();
-		Computer computer = (Computer) MyAnnotationUtil.iocMap.get("computer");
-		computer.sayHiForOwner();
+		Map<String,Method> rm = MyAnnotationUtil.doReqMapScanner(clsList);
 	}
  
 }
