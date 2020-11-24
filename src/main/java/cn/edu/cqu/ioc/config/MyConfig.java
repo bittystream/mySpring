@@ -1,6 +1,6 @@
 package cn.edu.cqu.ioc.config;
 
-import cn.edu.cqu.annotation.*;
+import cn.edu.cqu.ioc.annotation.*;
 import cn.edu.cqu.ioc.entity.*;
 
 @MyConfiguration

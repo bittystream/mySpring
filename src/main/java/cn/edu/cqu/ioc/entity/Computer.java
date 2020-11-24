@@ -1,6 +1,6 @@
 package cn.edu.cqu.ioc.entity;
 
-import cn.edu.cqu.annotation.*;
+import cn.edu.cqu.ioc.annotation.*;
 
 public class Computer {
 	private String name;

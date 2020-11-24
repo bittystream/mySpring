@@ -11,8 +11,7 @@ import java.util.Map;
 import cn.edu.cqu.ioc.entity.Computer;
 import cn.edu.cqu.ioc.entity.Student;
 import cn.edu.cqu.ioc.util.*;
- 
-import cn.edu.cqu.annotation.*;
+import cn.edu.cqu.ioc.annotation.*;
  
 public class MyAnnotationUtil {
 	public static Map<String,Method> reqMap = new HashMap<String,Method>();

@@ -1,4 +1,4 @@
-package cn.edu.cqu.annotation;
+package cn.edu.cqu.ioc.annotation;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

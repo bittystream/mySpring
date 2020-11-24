@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import cn.edu.cqu.annotation.MyConfiguration;
+import cn.edu.cqu.ioc.annotation.MyConfiguration;
  
 public class MyClassUtil {
  
@@ -26,12 +26,7 @@ public class MyClassUtil {
 		System.out.println("done");
 	}
 	
-	/**
-	 * 通过包名获取包内所有类
-	 * 
-	 * @param pkg
-	 * @return
-	 */
+	// 通过包名获得所有类名
 	public static List<Class<?>> getAllClassByPackageName(String packageName) {
 //		String packageName = pkg.getName();
 		// 获取当前包下以及子包下所以的类
@@ -39,9 +34,8 @@ public class MyClassUtil {
 		return returnClassList;
 	}
  
-	/**
-	 * 通过接口名取得某个接口下所有实现这个接口的类
-	 */
+	
+	// 通过接口名取得某个接口下所有实现这个接口的类
 	public static List<Class<?>> getAllClassByInterface(Class<?> c) {
 		List<Class<?>> returnClassList = null;
  
@@ -67,9 +61,7 @@ public class MyClassUtil {
 		return returnClassList;
 	}
  
-	/**
-	 * 取得某一类所在包的所有类名 不含迭代
-	 */
+	// 取得某一类所在包的所有类名 不含迭代
 	public static String[] getPackageAllClassName(String classLocation, String packageName) {
 		// 将packageName分解
 		String[] packagePathSplit = packageName.split("[.]");
@@ -86,12 +78,7 @@ public class MyClassUtil {
 		return null;
 	}
  
-	/**
-	 * 从包package中获取所有的Class
-	 * 
-	 * @param pack
-	 * @return
-	 */
+	// 从包中获得所有Class
 	private static List<Class<?>> getClasses(String packageName) {
  
 		// 第一个class类的集合
@@ -171,14 +158,7 @@ public class MyClassUtil {
 		return classes;
 	}
  
-	/**
-	 * 以文件的形式来获取包下的所有Class
-	 * 
-	 * @param packageName
-	 * @param packagePath
-	 * @param recursive
-	 * @param classes
-	 */
+	// 以文件的形式来获取包下的所有Class
 	private static void findAndAddClassesInPackageByFile(String packageName, String packagePath, final boolean recursive, List<Class<?>> classes) {
 		// 获取此包的目录 建立一个File
 		File dir = new File(packagePath);

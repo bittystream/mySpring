@@ -2,7 +2,7 @@ package cn.edu.cqu.ioc.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import cn.edu.cqu.annotation.MyAutoWired;
+import cn.edu.cqu.ioc.annotation.MyAutoWired;
 
 public class MyReflectUtil {
     //传入对象
