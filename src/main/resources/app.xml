@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
-	<bean name="student" class="cn.edu.cqu.ioc.entity.Student">
+	<bean name="student" class="ioc.entity.Student">
 		<property name="id" value="20184480"></property>
 		<property name="name" value="lyz"></property>
 	</bean>
 	
-	<bean name="student000" class="cn.edu.cqu.ioc.entity.Student">
+	<bean name="student000" class="ioc.entity.Student">
 		<property name="id" value="20181814"></property>
 		<property name="name" value="gg"></property>
 	</bean>

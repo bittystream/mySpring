@@ -10,5 +10,6 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Target({ TYPE, METHOD })
 public @interface MyRequestMapping {
-	String value() default ""; 
+	String value() default "";
+	String method() default "";
 }

@@ -89,9 +89,11 @@ public class MyAnnotationUtil {
 				// 获得@MyController标记的类, 名为第一个字母变小写
 				else if (cls.isAnnotationPresent(MyController.class)) {
 					String beanName = firstLetter2LowerCase(cls.getSimpleName());
+					System.out.println(beanName);
 					Object bean;
 					try {
-						bean = Class.forName(cls.getSimpleName()).getDeclaredConstructor().newInstance();
+						// 注意! 是getName(),需要完整的类名,而不能用getSimpleName()
+						bean = Class.forName(cls.getName()).getConstructor().newInstance();
 						iocMap.put(beanName,bean);
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -106,7 +108,7 @@ public class MyAnnotationUtil {
 					if (!myService.value().equals("")) beanName = myService.value();
 					Object bean;
 					try {
-						bean = Class.forName(cls.getSimpleName()).getDeclaredConstructor().newInstance();
+						bean = Class.forName(cls.getName()).getConstructor().newInstance();
 						iocMap.put(beanName, bean);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -118,7 +120,7 @@ public class MyAnnotationUtil {
 		return iocMap;
 	}
 	
-	static String firstLetter2LowerCase(String name) {
+	public static String firstLetter2LowerCase(String name) {
 		char [] charArr = name.toCharArray();
 		charArr[0] += 32;
 		return String.valueOf(charArr);
@@ -127,7 +129,7 @@ public class MyAnnotationUtil {
 	
 	public static void main(String [] args) {
 		List<Class<?>> clsList = MyClassUtil.getAllClassByPackageName("cn.edu.cqu");
-		Map<String,Method> rm = MyAnnotationUtil.doReqMapScanner(clsList);
+		Map<String, Object> rm = MyAnnotationUtil.doBeanScanner(clsList);
 	}
  
 }

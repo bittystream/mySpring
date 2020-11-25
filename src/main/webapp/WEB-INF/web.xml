@@ -4,7 +4,7 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <servlet>
+    <servlet>
   	<servlet-name>MyDispatchServlet</servlet-name>
   	<display-name>MyDispatchServlet</display-name>
   	<description></description>
@@ -16,6 +16,6 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>MyDispatchServlet</servlet-name>
-  	<url-pattern>/MyDispatchServlet</url-pattern>
+  	<url-pattern>/*</url-pattern>
   </servlet-mapping>
 </web-app>

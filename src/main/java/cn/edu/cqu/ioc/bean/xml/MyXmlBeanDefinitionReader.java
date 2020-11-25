@@ -20,7 +20,6 @@ public class MyXmlBeanDefinitionReader extends MyAbstractBeanDefinitionReader {
 
 	public MyXmlBeanDefinitionReader(ResourceLoader loader) {
 		super(loader);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void readXml(String location) throws Exception {
