@@ -2,8 +2,9 @@ package cn.edu.cqu.ioc.util;
 
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,12 @@ public class MyAnnotationUtil {
 				for (Method method: cls.getMethods()) {
 					if (method.isAnnotationPresent(MyRequestMapping.class)) {
 						MyRequestMapping mrp = method.getAnnotation(MyRequestMapping.class);
-						String url = baseUrl + mrp.value();
+						String methodUrl = mrp.value();
+						int index = methodUrl.lastIndexOf("/");
+						if (index > 0) {
+							methodUrl = methodUrl.substring(0, index);
+						}
+						String url = baseUrl + methodUrl;
 						System.out.println(url+" method="+method.getName());
 						reqMap.put(url, method);
 					}
@@ -48,6 +54,7 @@ public class MyAnnotationUtil {
 					String beanName = field.getType().getName();
 					if (!myAutoWired.value().equals("")) beanName = myAutoWired.value();
 					field.setAccessible(true);
+					System.out.println("Autowired: "+entry.getValue()+"   "+iocMap.get(beanName));
 					try {
 						field.set(entry.getValue(),iocMap.get(beanName));
 					} catch (Exception e) {
@@ -66,7 +73,7 @@ public class MyAnnotationUtil {
 			for (Class<?> cls : clsList) {
 				// 获得@MyConfiguration标记的类
 				if (cls.isAnnotationPresent(MyConfiguration.class)) {
-//					System.out.println(cls.getName());
+					System.out.println(cls.getName());
 					Method [] methods = cls.getDeclaredMethods();
 					for (Method method : methods) {
 //						System.out.println(method.getName());
@@ -79,6 +86,7 @@ public class MyAnnotationUtil {
 								// 默认被@MyBean标记的方法无参数!!!
 								Object bean = method.invoke(Class.forName(cls.getName()).getDeclaredConstructor().newInstance());
 								iocMap.put(beanName, bean);
+								System.out.println("Bean: "+beanName+"   "+bean.getClass().getName());
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -118,6 +126,36 @@ public class MyAnnotationUtil {
 			}
 		}
 		return iocMap;
+	}
+	
+	public static Map<String,List<String>> doParamScanner(List<Class<?>> clsList){
+		Map<String,List<String>> paramMap = new HashMap<String, List<String>>();
+		if (clsList != null && clsList.size() > 0) {
+			for (Class<?> cls : clsList) {
+				if (!cls.isAnnotationPresent(MyController.class)) {
+					return null;
+				}
+				for (Method method : cls.getMethods()) {
+					if (!method.isAnnotationPresent(MyRequestMapping.class)) {
+						return null;
+					}
+					String methodName = method.getName();
+					List<String> params = new ArrayList<String>();
+					for (Parameter param : method.getParameters()) {
+						if (param.getAnnotations().length > 0) {
+							// is annotated with @MyRequestParam
+							// 默认参数名跟value是一样的
+							String paramName = param.getName();
+							params.add(paramName);
+							System.out.println(methodName + "   " + paramName);
+						}
+					}
+					paramMap.put(methodName, params);
+				}
+			}
+		}
+		
+		return paramMap;
 	}
 	
 	public static String firstLetter2LowerCase(String name) {

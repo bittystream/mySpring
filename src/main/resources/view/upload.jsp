@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>UPLOAD YOUR FILE</h1>
-	<form action="#" method="post" enctype="multipart-form">
+	<form action="/mySpring/uploadFile" method="post" enctype="multipart/form-data">
 		Choose file:<input type="file" name="uploadFile"> 
 		<input type="submit" value="OK">
 	</form>

@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class MyDispatchServlet extends HttpServlet {
 	// ioc containers
 	private Map<String, Object> iocMap = new HashMap<String, Object>();
 	private Map<String, Method> reqMap = new HashMap<String, Method>();
+	private Map<String, List<String>> paramMap = new HashMap<String, List<String>>();
 	private List<Class<?>> clsList = new ArrayList<Class<?>>();
 
 	private Properties contextConfig = new Properties();
@@ -53,22 +55,10 @@ public class MyDispatchServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getContentType()!=null) {
-			System.out.println("there is file");
-			try {
-				doUpload(request, response);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			System.out.println("no file");
-			try {
-				doDispatch(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
+		try {
+			doDispatch(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -79,21 +69,38 @@ public class MyDispatchServlet extends HttpServlet {
 		String contextPath = request.getContextPath();
 		url = url.replaceAll(contextPath, "");
 		System.out.println("doDispatch: " + url);
+		String param = "";
+		boolean hasParam = false;
+		int index = url.lastIndexOf("/");
+		if (index > 0) {// 有参数
+			hasParam = true;
+			param = url.substring(index + 1);
+			url = url.substring(0, index);
+		}
 
 		if (!reqMap.containsKey(url)) {
 			return;
 		}
 		String templateRoot = contextConfig.getProperty("template-root");
 		String templateRootPath = this.getClass().getClassLoader().getResource(templateRoot).getFile();
-		
+
 		Method method = reqMap.get(url);
 		String beanName = MyAnnotationUtil.firstLetter2LowerCase(method.getDeclaringClass().getSimpleName());
 		System.out.println("doDispatch0: Controller name " + beanName);
-		String viewName = (String) method.invoke(iocMap.get(beanName), request, response);
-		System.out.println(templateRootPath+viewName);
-		MyViewResolver mvr = new MyViewResolver(templateRootPath,viewName);
-		MyView mv = mvr.resolveView();
-		mv.render(request, response);
+		System.out.println("method name = " + method.getName());
+
+		if (!hasParam) {
+			if (method.invoke(iocMap.get(beanName), request, response) == null)
+				return;
+			String viewName = (String) method.invoke(iocMap.get(beanName), request, response);
+			System.out.println(templateRootPath + viewName);
+			MyViewResolver mvr = new MyViewResolver(templateRootPath, viewName);
+			MyView mv = mvr.resolveView();
+			mv.render(request, response);
+		} else {
+			method.invoke(iocMap.get(beanName), request, response, param);
+		}
+
 	}
 
 	// 初始化
@@ -107,8 +114,14 @@ public class MyDispatchServlet extends HttpServlet {
 		clsList = MyClassUtil.getAllClassByPackageName(packageName);
 		// 开始注入！
 		reqMap = MyAnnotationUtil.doReqMapScanner(clsList);
-		iocMap = MyAnnotationUtil.doAutoWireScanner(MyAnnotationUtil.doBeanScanner(clsList));
+		iocMap = MyAnnotationUtil.doBeanScanner(clsList);
+		paramMap = MyAnnotationUtil.doParamScanner(clsList);
+		iocMap.put("iocMap", iocMap);
+		iocMap = MyAnnotationUtil.doAutoWireScanner(iocMap);
+		iocMap.put("iocMap", iocMap);
+
 		System.out.println("done init");
+//		
 	}
 
 	private void doLoadConfig(String contextConfigLocation) {
@@ -121,25 +134,4 @@ public class MyDispatchServlet extends HttpServlet {
 		}
 	}
 
-	private void doUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		FileItemFactory factory=new DiskFileItemFactory();
-		ServletFileUpload upload=new ServletFileUpload(factory);
-		List<FileItem> lstForms=upload.parseRequest(request);
-		//遍历所有表单元素
-		for (FileItem fileItem : lstForms) {
-		//判断每一个表单元素是否是普通表单
-			if(fileItem.isFormField()){
-				System.out.println(fileItem.getString("UTF-8"));
-			}else{
-				//上传前准备工作
-				//a、上传后的路径this.getServletContext().getRealPath("/")会出去当前项目在 部署的服务器上的绝对路径
-				String path = "E:/javaee/000file/";
-				//b、找出要上传的文件的名字
-				String fileName = fileItem.getName();
-				fileName = fileName.substring(fileName.lastIndexOf("\\")+1);
-				//c、上传
-				fileItem.write(new File(path+fileName));
-			}
-		}
-	}
 }

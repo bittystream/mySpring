@@ -24,4 +24,9 @@ public class TestController {
 		return "upload";
 	}
 	
+	@MyRequestMapping("/rest")
+	public String rest(HttpServletRequest req, HttpServletResponse resp) {
+		return "rest";
+	}
+	
 }
