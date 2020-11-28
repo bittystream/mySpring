@@ -8,7 +8,7 @@ public class MyConfig {
 	
 	@MyBean("student101")
 	public Student student() {
-		return new Student("20188888","orz");
+		return new Student("20200000","Bill");
 	}
 	
 	@MyBean

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cn.edu.cqu</groupId>
   <artifactId>mySpring</artifactId>
-  <packaging>pom</packaging>
+  <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>mySpring Maven Webapp</name>
   <url>http://maven.apache.org</url>

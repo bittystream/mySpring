@@ -26,6 +26,7 @@ public class MyXmlBeanDefinitionReader extends MyAbstractBeanDefinitionReader {
 		// 创建一个资源加载器
 		ResourceLoader loader = new ResourceLoader();
 		// 从资源加载器中获取输入流
+
 		InputStream inputStream = loader.getResource(location).getInputStream();
 		// 获取文档建造者工厂实例
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();

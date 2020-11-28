@@ -12,7 +12,6 @@ public class ResourceUrl implements Resource{
 	}
 
 	public InputStream getInputStream() throws Exception {
-//		System.out.println(url);
 		URLConnection urlConnection = url.openConnection();
 		urlConnection.connect();
 		return urlConnection.getInputStream();

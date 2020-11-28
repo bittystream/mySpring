@@ -1,7 +1,6 @@
 package cn.edu.cqu.demo.config;
 
 import cn.edu.cqu.demo.domain.Student;
-import cn.edu.cqu.demo.service.FileUploadService;
 import cn.edu.cqu.demo.service.StudentQueryService;
 import cn.edu.cqu.ioc.annotation.MyBean;
 import cn.edu.cqu.ioc.annotation.MyConfiguration;
@@ -33,10 +32,6 @@ public class RestConfig {
 	public StudentQueryService studentQueryService() {
 		return new StudentQueryService();
 	}
-	
-	@MyBean
-	public FileUploadService fileUploadService() {
-		return new FileUploadService();
-	}
+
 	
 }

@@ -54,7 +54,7 @@ public class MyAnnotationUtil {
 					String beanName = field.getType().getName();
 					if (!myAutoWired.value().equals("")) beanName = myAutoWired.value();
 					field.setAccessible(true);
-					System.out.println("Autowired: "+entry.getValue()+"   "+iocMap.get(beanName));
+					System.out.println("Autowire: "+entry.getValue()+" into "+iocMap.get(beanName));
 					try {
 						field.set(entry.getValue(),iocMap.get(beanName));
 					} catch (Exception e) {
@@ -73,7 +73,7 @@ public class MyAnnotationUtil {
 			for (Class<?> cls : clsList) {
 				// 获得@MyConfiguration标记的类
 				if (cls.isAnnotationPresent(MyConfiguration.class)) {
-					System.out.println(cls.getName());
+//					System.out.println(cls.getName());
 					Method [] methods = cls.getDeclaredMethods();
 					for (Method method : methods) {
 //						System.out.println(method.getName());
@@ -97,7 +97,7 @@ public class MyAnnotationUtil {
 				// 获得@MyController标记的类, 名为第一个字母变小写
 				else if (cls.isAnnotationPresent(MyController.class)) {
 					String beanName = firstLetter2LowerCase(cls.getSimpleName());
-					System.out.println(beanName);
+//					System.out.println(beanName);
 					Object bean;
 					try {
 						// 注意! 是getName(),需要完整的类名,而不能用getSimpleName()

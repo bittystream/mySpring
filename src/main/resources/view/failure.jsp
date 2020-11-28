@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Upload Succeeded!</title>
+<title>Upload failed!</title>
 </head>
 <body>
-<h1 style="color:red">UPLOAD SUCCEEDED!</h1>
+<h1 style="color:red">UPLOAD FAILED!</h1>
 <p><a href="/mySpring/upload">return to previous page</a></p>
 </body>
 </html>

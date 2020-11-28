@@ -39,7 +39,6 @@ public class MyDispatchServlet extends HttpServlet {
 	// ioc containers
 	private Map<String, Object> iocMap = new HashMap<String, Object>();
 	private Map<String, Method> reqMap = new HashMap<String, Method>();
-	private Map<String, List<String>> paramMap = new HashMap<String, List<String>>();
 	private List<Class<?>> clsList = new ArrayList<Class<?>>();
 
 	private Properties contextConfig = new Properties();
@@ -115,7 +114,6 @@ public class MyDispatchServlet extends HttpServlet {
 		// ¿ªÊ¼×¢Èë£¡
 		reqMap = MyAnnotationUtil.doReqMapScanner(clsList);
 		iocMap = MyAnnotationUtil.doBeanScanner(clsList);
-		paramMap = MyAnnotationUtil.doParamScanner(clsList);
 		iocMap.put("iocMap", iocMap);
 		iocMap = MyAnnotationUtil.doAutoWireScanner(iocMap);
 		iocMap.put("iocMap", iocMap);

@@ -4,15 +4,22 @@ import cn.edu.cqu.ioc.annotation.*;
 
 public class Computer {
 	private String name;
+	
 	@MyAutoWired("student101")
 	public Student owner;
+	
+	public void sayHiForOwner() {
+		owner.sayHi();
+		System.out.println("who is owner of "+name);
+	}
 
+	public Computer(String name) {
+		this.name = name;
+	}
+	
 	public Computer(String name, Student owner) {
 		this.name = name;
 		this.owner = owner;
-	}
-	public Computer(String name) {
-		this.name = name;
 	}
 	
 	public void setName(String name) {
@@ -29,10 +36,5 @@ public class Computer {
 	
 	public Student getOwner() {
 		return owner;
-	}
-	
-	public void sayHiForOwner() {
-		owner.sayHi();
-		System.out.println("who is owner of "+name);
 	}
 }
