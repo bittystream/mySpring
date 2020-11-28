@@ -35,6 +35,9 @@ public class UploadController {
         resp.setContentType("text/html;charset=utf-8");
         DiskFileItemFactory factory = new DiskFileItemFactory();
         factory.setSizeThreshold(1024 * 1024 * 5); // 文件大小不超过5MB
+        
+        String fileSaveDir = req.getServletContext().getAttribute("fileSaveDir").toString();
+        System.out.println("in uploadController: file save dir = "+fileSaveDir);
         File tempDir = new File("E:/javaee/temp");
         ServletFileUpload upload = new ServletFileUpload(factory);
         upload.setSizeMax(1024 * 1024 * 5);

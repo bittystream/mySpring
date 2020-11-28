@@ -103,7 +103,10 @@ public class MyDispatchServlet extends HttpServlet {
 	}
 
 	// 初始化
-	public void init(ServletConfig servletConfig) {
+	public void init(ServletConfig servletConfig) throws ServletException {
+		// 很重要!!!!!
+		super.init(servletConfig);
+		
 		System.out.println("start init");
 		String contextConfigLocation = servletConfig.getInitParameter("contextConfigLocation");
 		doLoadConfig(contextConfigLocation);
@@ -117,7 +120,11 @@ public class MyDispatchServlet extends HttpServlet {
 		iocMap.put("iocMap", iocMap);
 		iocMap = MyAnnotationUtil.doAutoWireScanner(iocMap);
 		iocMap.put("iocMap", iocMap);
-
+		
+		// 把上传文件的路径存入servletContext
+		String fileSaveDir = contextConfig.getProperty("file-save-dir");
+		getServletContext().setAttribute("fileSaveDir", fileSaveDir);
+		System.out.println("in dispatcher: file save dir = "+fileSaveDir);
 		System.out.println("done init");
 //		
 	}
